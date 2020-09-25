@@ -1,5 +1,5 @@
 import nltk
-import sys
+import sys,os,cv2,sys
 
 FILE_MATCHES = 1
 SENTENCE_MATCHES = 1
@@ -44,27 +44,34 @@ def main():
 
 
 def load_files(directory):
-    
-    raise NotImplementedError
+    inf = {}
+    os.chdir(r"{}".format(directory))
+    files = os.listdir()
+    for file in files:
+        f = open(file, encoding="utf8")
+        data = f.read()
+        inf[file] = data
+    #print(len(inf["python.txt"]))
+    #raise NotImplementedError
 
 
 def tokenize(document):
-    
+
     raise NotImplementedError
 
 
 def compute_idfs(documents):
-    
+
     raise NotImplementedError
 
 
 def top_files(query, files, idfs, n):
-    
+
     raise NotImplementedError
 
 
 def top_sentences(query, sentences, idfs, n):
-    
+
     raise NotImplementedError
 
 
