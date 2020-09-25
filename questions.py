@@ -1,5 +1,5 @@
 import nltk
-import sys,os,cv2,sys
+import sys,os,cv2,sys,string
 
 FILE_MATCHES = 1
 SENTENCE_MATCHES = 1
@@ -51,13 +51,31 @@ def load_files(directory):
         f = open(file, encoding="utf8")
         data = f.read()
         inf[file] = data
-    #print(len(inf["python.txt"]))
+    return inf
+    #print(len(inf["python.txt"][0]))
     #raise NotImplementedError
 
 
 def tokenize(document):
+    #nltk.download()
+    document.lower()
+    tokens = nltk.word_tokenize(document)
+    #delete stopwords
+    stopwords = nltk.corpus.stopwords.words("english")
+    #delete string punctuation
+    punctuation = string.punctuation
+    to_delete = []
+    for t in tokens:
+        if t in stopwords:
+            to_delete.append(t)
+        elif t in punctuation:
+            to_delete.append(t)
+    for td in to_delete:
+        tokens.remove(td)
+    #print(len(tokens))
+    return tokens
 
-    raise NotImplementedError
+    #raise NotImplementedError
 
 
 def compute_idfs(documents):
