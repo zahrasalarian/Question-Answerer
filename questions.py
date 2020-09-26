@@ -94,7 +94,7 @@ def compute_idfs(documents):
                     count += 1
             if word not in inverse_doc.keys():
                 inverse_doc[word] = num_dic/count
-    print(len(inverse_doc))
+    #print(len(inverse_doc))
     #raise NotImplementedError
 
 
