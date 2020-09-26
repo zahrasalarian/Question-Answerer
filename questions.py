@@ -94,13 +94,30 @@ def compute_idfs(documents):
                     count += 1
             if word not in inverse_doc.keys():
                 inverse_doc[word] = num_dic/count
+    return inverse_doc
     #print(len(inverse_doc))
     #raise NotImplementedError
 
 
 def top_files(query, files, idfs, n):
-
-    raise NotImplementedError
+    tf = {}
+    for q in query:
+        q_c_f = {}
+        for k,v in files.items():
+            count = 0
+            for word in v:
+                if word == q:
+                    count += 1
+            if count != 0:
+                q_c_f[k] = count*idfs[q]
+        {k: v for k, v in sorted(q_c_f.items(), key=lambda item: item[1])}
+        fs = []
+        for k in q_c_f:
+            fs.append(k)
+        tf[q] = fs
+    print (tf)
+    return tf
+    #raise NotImplementedError
 
 
 def top_sentences(query, sentences, idfs, n):
