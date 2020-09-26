@@ -100,28 +100,32 @@ def compute_idfs(documents):
 
 
 def top_files(query, files, idfs, n):
-    tf = {}
-    for q in query:
-        q_c_f = {}
-        for k,v in files.items():
+    tf = []
+    q_c_f = {}
+    for k,v in files.items():
+        for q in query:
             count = 0
             for word in v:
                 if word == q:
                     count += 1
             if count != 0:
-                q_c_f[k] = count*idfs[q]
-        {k: v for k, v in sorted(q_c_f.items(), key=lambda item: item[1])}
-        fs = []
-        for k in q_c_f:
-            fs.append(k)
-        tf[q] = fs
-    print (tf)
+                if k not in q_c_f:
+                    q_c_f[k] = count*idfs[q]
+                else:
+                    q_c_f[k] += count*idfs[q]
+    q_c_f = {k: v for k, v in sorted(q_c_f.items(), key=lambda item: item[1],reverse=True)}
+    #print(q_c_f)
+    fs = []
+    for k in q_c_f:
+        fs.append(k)
+    tf = fs[:n]
+    #print (tf)
     return tf
     #raise NotImplementedError
 
 
 def top_sentences(query, sentences, idfs, n):
-
+    #print(sentences)
     raise NotImplementedError
 
 
