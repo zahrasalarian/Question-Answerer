@@ -58,7 +58,7 @@ def load_files(directory):
 
 def tokenize(document):
     #nltk.download()
-    document.lower()
+    document = document.lower()
     tokens = nltk.word_tokenize(document)
     #delete stopwords
     stopwords = nltk.corpus.stopwords.words("english")
@@ -72,15 +72,30 @@ def tokenize(document):
             to_delete.append(t)
     for td in to_delete:
         tokens.remove(td)
-    #print(len(tokens))
+    tokens.sort()
+    #print(tokens)
     return tokens
 
     #raise NotImplementedError
 
 
 def compute_idfs(documents):
-
-    raise NotImplementedError
+    inverse_doc = {}
+    unique_doc =[]
+    num_dic = len(documents)
+    for k,v in documents.items():
+        documents[k] = set(v)
+        unique_doc.append(documents[k])
+    for k,v in documents.items():
+        for word in v:
+            count = 0
+            for ud in unique_doc:
+                if word in ud:
+                    count += 1
+            if word not in inverse_doc.keys():
+                inverse_doc[word] = num_dic/count
+    print(len(inverse_doc))
+    #raise NotImplementedError
 
 
 def top_files(query, files, idfs, n):
