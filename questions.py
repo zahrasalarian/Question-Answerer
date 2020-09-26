@@ -53,7 +53,6 @@ def load_files(directory):
         inf[file] = data
     return inf
     #print(len(inf["python.txt"][0]))
-    #raise NotImplementedError
 
 
 def tokenize(document):
@@ -76,8 +75,6 @@ def tokenize(document):
     #print(tokens)
     return tokens
 
-    #raise NotImplementedError
-
 
 def compute_idfs(documents):
     inverse_doc = {}
@@ -96,7 +93,6 @@ def compute_idfs(documents):
                 inverse_doc[word] = num_dic/count
     return inverse_doc
     #print(len(inverse_doc))
-    #raise NotImplementedError
 
 
 def top_files(query, files, idfs, n):
@@ -121,12 +117,25 @@ def top_files(query, files, idfs, n):
     tf = fs[:n]
     #print (tf)
     return tf
-    #raise NotImplementedError
 
 
 def top_sentences(query, sentences, idfs, n):
-    #print(sentences)
-    raise NotImplementedError
+    tf = []
+    q_c_f = {}
+    for k,v in sentences.items():
+        for q in query:
+            if q in v:
+                if k not in q_c_f:
+                    q_c_f[k] = idfs[q]
+                else:
+                    q_c_f[k] += idfs[q]
+    q_c_f = {k: v for k, v in sorted(q_c_f.items(), key=lambda item: item[1],reverse=True)}
+    fs = []
+    for k in q_c_f:
+        fs.append(k)
+    tf = fs[:n]
+    #print(tf)
+    return tf
 
 
 if __name__ == "__main__":
