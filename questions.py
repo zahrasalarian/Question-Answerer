@@ -130,12 +130,28 @@ def top_sentences(query, sentences, idfs, n):
                 else:
                     q_c_f[k] += idfs[q]
     q_c_f = {k: v for k, v in sorted(q_c_f.items(), key=lambda item: item[1],reverse=True)}
+    #print(q_c_f)
+    #check if we have more than one match
+    highest = max(q_c_f.values())
+    match_sentence = [k for k, v in q_c_f.items() if v == highest]
+    term_density = {}
+    if len(match_sentence) > 1:
+        for sentence in match_sentence:
+            intersec = set(sentence).intersection(query)
+            term_density[sentence] = len(intersec)
+        term_density = {k: v for k, v in sorted(term_density.items(), key=lambda item: item[1],reverse=True)}
+        fs = []
+        for k in q_c_f:
+            fs.append(k)
+        td = fs[:n]
+        return td
+    #print(match_sentence)
     fs = []
     for k in q_c_f:
         fs.append(k)
-    tf = fs[:n]
+    sen = fs[:n]
     #print(tf)
-    return tf
+    return sen
 
 
 if __name__ == "__main__":
